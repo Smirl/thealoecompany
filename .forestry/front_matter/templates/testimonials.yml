@@ -10,10 +10,12 @@ fields:
   name: name
   label: Name
   description: Name of the reviewer
-- type: file
-  name: image
-  description: The relative URL to the profile picture of the reviewer. i.e. images/anonymous-female.png
+- name: image
+  type: text
+  config:
+    required: false
   label: Profile Picture
+  description: The relative URL to the profile picture of the reviewer. i.e. images/anonymous-female.png
 - type: text
   name: externallink
   label: externallink
