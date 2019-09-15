@@ -1,0 +1,12 @@
+baseurl: "https://www.thealoecompany.com/"
+languageCode: "en"
+title: "The Aloe Company"
+theme: "thealoecompany"
+
+params:
+  description: ""
+
+  # Additional meta
+  meta:
+  - name: ""
+    description: ""

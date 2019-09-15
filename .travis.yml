@@ -1,0 +1,24 @@
+sudo: required
+language: minimal
+env:
+  global:
+  - VERSION="1.0.$TRAVIS_BUILD_NUMBER"
+  - KUBECONFIG="deploy/kubeconfig"
+services:
+- docker
+before_install:
+# - openssl aes-256-cbc -K $encrypted_e4f343148096_key -iv $encrypted_e4f343148096_iv -in deploy/kubeconfig.enc -out deploy/kubeconfig -d
+install:
+- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.15.3/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+- curl https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz | tar -xvz && sudo mv linux-amd64/helm /usr/local/bin/
+script:
+- docker build -t registry.smirlwebs.com/smirl/thealoecompany:$VERSION .
+after_success:
+- echo "$DOCKER_PASSWORD" | docker login -u smirl --password-stdin registry.smirlwebs.com
+- docker push registry.smirlwebs.com/smirl/thealoecompany:$VERSION
+deploy:
+  provider: script
+  script: bash deploy/deploy.sh
+  skip_cleanup: true
+  on:
+    branch: master

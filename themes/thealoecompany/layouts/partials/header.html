@@ -1,0 +1,23 @@
+<!--
+Header start
+==================== -->
+<section class="hero-area">
+  <div class="container pb-5">
+    <div class="row">
+      <div class="col-md-6 text-center">
+      {{- with .Params.image }}
+        <img src="{{ relURL .path }}" alt="{{ .alt }}">
+      {{- end }}
+      </div>
+      <div class="col-md-6 text-center text-lg-left">
+        <div class="block">
+          <h1 class="">{{ .Title }}</h1>
+          <p>{{ .Content }}</p>
+        {{- with .Params.button }}
+          <a class="btn btn-main" href="{{ .link }}" role="button">{{ .text }}</a>
+        {{- end }}
+        </div>
+      </div>
+    </div><!-- .row close -->
+  </div><!-- .container close -->
+</section><!-- header close -->

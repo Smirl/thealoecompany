@@ -1,0 +1,31 @@
+{{- with .Site.GetPage "/testimonials" }}
+<section class="testimonials section" id="testimonial">
+  <div class="container">
+    <div class="heading">
+      <h2>{{ .Title }}</h2>
+    </div>
+    <div class="row">
+      {{- range .Pages }}
+      <div class="col-md-4 text-center">
+        <div class="testimonial-block">
+          <i class="tf-ion-quote"></i>
+          <p>{{ .Content | markdownify }}</p>
+          <div class="author-details">
+            <img src="{{ .Params.image }}" alt="">
+            <h4><a href="{{ .Params.externallink }}" target="blank">{{ .Title }}</a></h4>
+            <span>{{ .Params.name }}</span>
+          </div>
+        </div>
+      </div>
+      {{- end }}
+    </div>
+    <div class="row mt-100">
+    {{- with .Params.button }}
+      <div class="col-md-12 text-center">
+        <a href="{{ .link }}" class="btn btn-main">{{ .text }}</a>
+      </div>
+    {{- end }}
+    </div>
+  </div>
+</section>
+{{ end }}
