@@ -1,0 +1,43 @@
+---
+label: Main
+hide_body: false
+fields:
+- type: text
+  name: title
+  label: title
+- type: text
+  name: linktitle
+  label: linktitle
+- type: field_group
+  name: image
+  label: image
+  fields:
+  - type: file
+    name: path
+    label: path
+  - type: text
+    name: alt
+    label: alt
+- type: field_group
+  name: button
+  label: button
+  fields:
+  - type: text
+    name: link
+    label: link
+  - type: text
+    name: text
+    label: text
+- type: field_group
+  name: call_to_action
+  label: call_to_action
+  fields:
+  - type: text
+    name: title
+    label: title
+  - type: text
+    name: text
+    label: text
+  - type: text
+    name: button_text
+    label: button_text

@@ -7,11 +7,9 @@ sections:
 - type: document
   path: content/_index.md
   label: Main
-  match: "**/*"
 - type: document
   path: content/testimonials/_index.md
   label: Testimonial Title
-  match: "**/*"
 - type: directory
   path: content/testimonials
   label: Testimonials
