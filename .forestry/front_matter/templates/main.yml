@@ -41,3 +41,5 @@ fields:
   - type: text
     name: button_text
     label: button_text
+pages:
+- content/_index.md
