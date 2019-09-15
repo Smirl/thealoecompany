@@ -29,9 +29,10 @@ can be recreated with:
 
     SECRET_NAME=$(kubectl get secrets -o name | grep travis)
     SERVER_NAME=$(kubectl config view --minify -o json | jq -r '.clusters[0].cluster.server')
+    TOKEN=$(kubectl get $SECRET_NAME -o json | jq -r '.data.token' | base64 -D)
     kubectl get $SECRET_NAME -o json | jq -r '.data."ca.crt"' | base64 -D > ./deploy/ca.crt
     kubectl config set-cluster travis --server=$SERVER_NAME --certificate-authority=./deploy/ca.crt --embed-certs
-    kubectl config set-credentials travis --token XXXXXX
+    kubectl config set-credentials travis --token $TOKEN
     kubectl config set-context travis --cluster=travis --user=travis --namespace thealoecompany
     kubectl config use-context travis
     kubectl config view --raw --minify > deploy/kubeconfig
