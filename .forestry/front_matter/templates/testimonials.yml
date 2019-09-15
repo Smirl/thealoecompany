@@ -4,16 +4,21 @@ hide_body: false
 fields:
 - type: text
   name: title
-  label: title
+  label: Title
+  description: The summary of the review
 - type: text
   name: name
-  label: name
+  label: Name
+  description: Name of the reviewer
 - type: file
   name: image
-  label: image
+  description: The relative URL to the profile picture of the reviewer. i.e. images/anonymous-female.png
+  label: Profile Picture
 - type: text
   name: externallink
   label: externallink
+  description: Link to review (on TrustPilot, etc.)
 - type: number
   name: weight
   label: weight
+  description: The order of the reviews
