@@ -1,0 +1,19 @@
+---
+label: Testimonials
+hide_body: false
+fields:
+- type: text
+  name: title
+  label: title
+- type: text
+  name: name
+  label: name
+- type: file
+  name: image
+  label: image
+- type: text
+  name: externallink
+  label: externallink
+- type: number
+  name: weight
+  label: weight
