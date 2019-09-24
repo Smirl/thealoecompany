@@ -16,5 +16,6 @@ menu:
     weight: 1
 
 ---
-Lorem ipsum dolor sit amet, consectetur
-adipisicing elit. Voluptatem, inventore?
+We have been a distributor of Forever Living Products for many years.
+
+Get in touch if you would like to purchase fantastic Aloe Vera and Bee Products, or if you are looking to start a Forever Living Products business yourself.
