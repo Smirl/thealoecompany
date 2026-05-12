@@ -13,14 +13,6 @@ pods:
   ports:
     - containerPort: 80
       name: http
-  env:
-    - name: API_KEY
-      valueFrom:
-        secretKeyRef:
-          name: amplify
-          key: api_key
-    - name: AMPLIFY_IMAGENAME
-      value: 'thealoecompany'
 
 podDisruptionBudget:
   enabled: false

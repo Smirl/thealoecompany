@@ -2,8 +2,11 @@ name: Deploy
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
   release:
     types:
       - published
@@ -17,22 +20,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Docker meta
         id: docker_meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v6
         with:
           images: ghcr.io/smirl/thealoecompany
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v4
 
       - name: Docker Login
-        uses: docker/login-action@v1
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -40,9 +43,9 @@ jobs:
 
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v7
         with:
-          push: true
+          push: ${{ github.event_name == 'release' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
 
@@ -50,30 +53,33 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-      url: https://thealoecompany.com/
+      url: https://thealoecompany.com
     needs:
       - build
+    if: github.event_name == 'release'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-
-      # DEPLOY
-      - name: Get tag name
-        uses: olegtarasov/get-tag@v2.1
+        uses: actions/checkout@v6
 
       - name: Helm tool installer
-        uses: Azure/setup-helm@v1
+        uses: Azure/setup-helm@v5
         with:
-          version: '3.2.4'
+          version: 'latest'
 
-      - uses: azure/k8s-set-context@v1
+      - name: Set Kubernetes Context
+        uses: azure/k8s-set-context@v5
         with:
           method: service-account
           k8s-url: ${{ secrets.K8S_URL }}
           k8s-secret: ${{ secrets.K8S_SECRET }}
 
       - name: Helm repo add mvisonneau
-        run: helm repo add mvisonneau https://charts.visonneau.fr/
+        run: helm repo add mvisonneau https://visonneau.fr
 
       - name: Deploy
-        run: helm upgrade --install thealoecompany mvisonneau/generic-app --version 0.0.11 --namespace thealoecompany -f deploy/values.yaml --set pods.image.tag=$GIT_TAG_NAME
+        run: |
+          helm upgrade --install thealoecompany mvisonneau/generic-app \
+            --version 0.0.11 \
+            --namespace thealoecompany \
+            -f deploy/values.yaml \
+            --set pods.image.tag=${{ github.ref_name }}

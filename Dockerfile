@@ -1,8 +1,10 @@
-FROM nginxinc/amplify-agent:1.4.1-1 as build
+FROM alpine:3.20 AS build
+ARG HUGO_VERSION=0.128.0
+RUN wget -O hugo.tar.gz https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz && \
+    tar -xf hugo.tar.gz && \
+    mv hugo /usr/local/bin/
 COPY . /opt/code
-RUN wget -O hugo.tar.gz https://github.com/gohugoio/hugo/releases/download/v0.57.2/hugo_0.57.2_Linux-64bit.tar.gz && \
-    tar -xvf hugo.tar.gz && \
-    ./hugo -s /opt/code --cleanDestinationDir --minify
+RUN hugo -s /opt/code --cleanDestinationDir --minify
 
-FROM nginxinc/amplify-agent:1.4.1-1
+FROM nginx:alpine
 COPY --from=build /opt/code/public /usr/share/nginx/html
