@@ -74,7 +74,7 @@ jobs:
           k8s-secret: ${{ secrets.K8S_SECRET }}
 
       - name: Helm repo add mvisonneau
-        run: helm repo add mvisonneau https://visonneau.fr
+        run: helm repo add mvisonneau https://charts.visonneau.fr/
 
       - name: Deploy
         run: |
